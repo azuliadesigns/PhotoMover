@@ -42,5 +42,8 @@ A full list of available format strings can be found here - https://docs.microso
 # Future Work
 Still to be implemented is recursive processing of images, more RAW formats supported and reading in more tags for extra filename operations. Reading the GPS location and converting this to a country/region/city/date filename structure is the eventual goal.
 
+# Credits
+This application makes use of the MetadataExtractor package - https://www.nuget.org/packages/MetadataExtractor/ released under the Apache 2 Licence, and XmpCore - https://www.nuget.org/packages/XmpCore/ which is released under the BSD Licence.
+
 # Comments and Feedback
 Was this tool useful in any way? Do you have any suggestions for improvements, or did you find something that didn't work? Let me know and I'll do my best to incorporate your feedback.
