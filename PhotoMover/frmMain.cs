@@ -100,6 +100,7 @@ namespace PhotoMover
                         item.sourceFilename = file;
                         item.destinationFilename = $"{txtDestinationFolder.Text}\\{item.dataTaken}\\{filename}";
                         item.format = Path.GetExtension(filename).ToUpper().TrimStart('.');
+                        item.fullDate = dateTaken.Value;
                         items.Add(item);
                     }
                 }
@@ -170,23 +171,32 @@ namespace PhotoMover
             foreach (DataGridViewRow row in gvResults.Rows)
             {
                 string source = row.Cells[0].Value.ToString();
-                string destination = row.Cells[1].Value.ToString();
+                string destination = row.Cells[3].Value.ToString();
                 string date = row.Cells[2].Value.ToString();
+                string datetime = row.Cells[4].Value.ToString();
 
                 string folder = Path.GetDirectoryName(destination);
 
                 if (!System.IO.Directory.Exists(folder))
                     System.IO.Directory.CreateDirectory(folder);
 
-                if (rbMove.Checked)
+                if (!chk_DontMove.Checked)
                 {
-                    if (!File.Exists(destination))
-                        File.Move(source, destination);
+                    if (rbMove.Checked)
+                    {
+                        if (!File.Exists(destination))
+                            File.Move(source, destination);
+                    }
+                    else if (rbCopy.Checked)
+                    {
+                        if (!File.Exists(destination))
+                            File.Copy(source, destination);
+                    }
                 }
-                else if (rbCopy.Checked)
+
+                if (chkTouch.Checked)
                 {
-                    if (!File.Exists(destination))
-                        File.Copy(source, destination);
+                    File.SetCreationTime(destination, DateTime.Parse(datetime));
                 }
             }
         }
@@ -206,5 +216,7 @@ namespace PhotoMover
         public string format { get; set; }
         public string dataTaken { get; set; }
         public string destinationFilename { get; set; }
+
+        public DateTime fullDate { get; set; }
     }
 }

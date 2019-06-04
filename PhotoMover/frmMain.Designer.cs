@@ -40,12 +40,14 @@
             this.gvResults = new System.Windows.Forms.DataGridView();
             this.btnMoveFiles = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.chkTouch = new System.Windows.Forms.CheckBox();
             this.txtDateFormat = new System.Windows.Forms.TextBox();
             this.lblDateFormat = new System.Windows.Forms.Label();
             this.rbCopy = new System.Windows.Forms.RadioButton();
             this.rbMove = new System.Windows.Forms.RadioButton();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.resultLabel = new System.Windows.Forms.Label();
+            this.chk_DontMove = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.gvResults)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -144,16 +146,28 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.chk_DontMove);
+            this.groupBox1.Controls.Add(this.chkTouch);
             this.groupBox1.Controls.Add(this.txtDateFormat);
             this.groupBox1.Controls.Add(this.lblDateFormat);
             this.groupBox1.Controls.Add(this.rbCopy);
             this.groupBox1.Controls.Add(this.rbMove);
-            this.groupBox1.Location = new System.Drawing.Point(568, 12);
+            this.groupBox1.Location = new System.Drawing.Point(491, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(227, 128);
+            this.groupBox1.Size = new System.Drawing.Size(304, 128);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Options";
+            // 
+            // chkTouch
+            // 
+            this.chkTouch.AutoSize = true;
+            this.chkTouch.Location = new System.Drawing.Point(150, 21);
+            this.chkTouch.Name = "chkTouch";
+            this.chkTouch.Size = new System.Drawing.Size(139, 17);
+            this.chkTouch.TabIndex = 4;
+            this.chkTouch.Text = "Touch with Date Taken";
+            this.chkTouch.UseVisualStyleBackColor = true;
             // 
             // txtDateFormat
             // 
@@ -205,6 +219,16 @@
             this.resultLabel.TabIndex = 10;
             this.resultLabel.Text = "progress";
             // 
+            // chk_DontMove
+            // 
+            this.chk_DontMove.AutoSize = true;
+            this.chk_DontMove.Location = new System.Drawing.Point(150, 44);
+            this.chk_DontMove.Name = "chk_DontMove";
+            this.chk_DontMove.Size = new System.Drawing.Size(145, 17);
+            this.chk_DontMove.TabIndex = 5;
+            this.chk_DontMove.Text = "Touch Only (Don\'t Move)";
+            this.chk_DontMove.UseVisualStyleBackColor = true;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -252,6 +276,8 @@
         private System.Windows.Forms.RadioButton rbMove;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.Label resultLabel;
+        private System.Windows.Forms.CheckBox chkTouch;
+        private System.Windows.Forms.CheckBox chk_DontMove;
     }
 }
 
