@@ -64,6 +64,8 @@ namespace PhotoMover
 
                 resultLabel.Text = string.Empty;
                 gvResults.DataSource = null;
+                tabControl1.SelectedIndex = 0;
+                tabControl1.TabPages[1].Text = "Errors (0)";
                 backgroundWorker1.RunWorkerAsync();
             }
             else if (backgroundWorker1.WorkerSupportsCancellation == true)
@@ -76,7 +78,6 @@ namespace PhotoMover
         {
             BackgroundWorker worker = sender as BackgroundWorker;
             string[] files = System.IO.Directory.GetFiles(txtSourceFolder.Text);
-            List<string> errors = new List<string>();
             int counter = 0;
             int total = files.Count();
             items = new List<ItemToMove>();
@@ -114,6 +115,7 @@ namespace PhotoMover
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             resultLabel.Text = (e.ProgressPercentage.ToString() + "%");
+            tabControl1.TabPages[1].Text = string.Format("Errors {0}", lstErrors.Items.Count);
         }
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -137,9 +139,16 @@ namespace PhotoMover
             {
                 using (Image photo = Image.FromFile(filename))
                 {
-                    PropertyItem pi = photo.GetPropertyItem(propertyTagExifDTOrig_);
-                    ASCIIEncoding enc = new ASCIIEncoding();
-                    dateTakenText = enc.GetString(pi.Value, 0, pi.Len - 1);
+                    try
+                    {
+                        PropertyItem pi = photo.GetPropertyItem(propertyTagExifDTOrig_);
+                        ASCIIEncoding enc = new ASCIIEncoding();
+                        dateTakenText = enc.GetString(pi.Value, 0, pi.Len - 1);
+                    }
+                    catch (Exception ex)
+                    {
+                        lstErrors.Items.Add(string.Format("{0} ({1})", ex.Message, filename));
+                    }
                 }
 
                 if (!string.IsNullOrEmpty(dateTakenText))
@@ -208,15 +217,28 @@ namespace PhotoMover
             else if (rbMove.Checked)
                 btnMoveFiles.Text = "Move";
         }
+
+        private void TxtSourceFolder_TextChanged(object sender, EventArgs e)
+        {
+            btnPreview.Enabled = !string.IsNullOrEmpty(txtSourceFolder.Text);
+        }
     }
 
     public class ItemToMove
     {
+        [DisplayName("Source")]
         public string sourceFilename { get; set; }
+
+        [DisplayName("Format")]
         public string format { get; set; }
+
+        [DisplayName("Date Taken")]
         public string dataTaken { get; set; }
+
+        [DisplayName("Destination")]
         public string destinationFilename { get; set; }
 
+        [Browsable(false)]
         public DateTime fullDate { get; set; }
     }
 }
