@@ -238,7 +238,6 @@ namespace PhotoMover
         [DisplayName("Destination")]
         public string destinationFilename { get; set; }
 
-        [Browsable(false)]
         public DateTime fullDate { get; set; }
     }
 }
